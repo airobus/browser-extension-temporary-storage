@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <div class="container">
+        <textarea id="notepad" placeholder="输入你的笔记..." spellcheck="false"></textarea>
+        <div class="button-group">
+            <button id="saveButton" class="button">保存</button>
+            <button id="sendToNotion" class="button notion-button">发送到Notion</button>
+            <button id="clearButton" class="button">清除</button>
+        </div>
+        <div class="settings-panel" id="settingsPanel" style="display: none;">
+            <input type="text" id="notionToken" placeholder="Notion API Token" class="settings-input">
+            <input type="text" id="notionPageId" placeholder="Notion Page ID" class="settings-input">
+            <button id="saveSettings" class="button settings-button">保存设置</button>
+        </div>
+        <div class="settings-toggle">
+            <button id="toggleSettings" class="button-link">Notion 设置</button>
+        </div>
+    </div>
+    <script src="popup.js"></script>
+</body>
+</html> 

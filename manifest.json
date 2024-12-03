@@ -1,0 +1,34 @@
+{
+  "manifest_version": 3,
+  "name": "Quick Notes",
+  "version": "1.0",
+  "description": "一个简单的临时记事本浏览器插件，支持发送到Notion",
+  "author": "airobus",
+  "homepage_url": "https://github.com/airobus",
+  "icons": {
+    "16": "icons/favicon.ico",
+    "32": "icons/favicon.ico",
+    "48": "icons/favicon.ico",
+    "128": "icons/favicon.ico"
+  },
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "icons/favicon.ico",
+      "32": "icons/favicon.ico",
+      "48": "icons/favicon.ico",
+      "128": "icons/favicon.ico"
+    }
+  },
+  "permissions": [
+    "storage",
+    "contextMenus",
+    "https://api.notion.com/*"
+  ],
+  "host_permissions": [
+    "https://api.notion.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  }
+} 
