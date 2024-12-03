@@ -13,12 +13,36 @@
             <button id="clearButton" class="button">清除</button>
         </div>
         <div class="settings-panel" id="settingsPanel" style="display: none;">
-            <input type="text" id="notionToken" placeholder="Notion API Token" class="settings-input">
-            <input type="text" id="notionPageId" placeholder="Notion Page ID" class="settings-input">
+            <input type="text" id="notionToken" placeholder="Notion Integration Token" class="settings-input">
+            <input type="text" id="notionPageId" placeholder="Notion Page ID (复制页面链接最后一段)" class="settings-input">
             <button id="saveSettings" class="button settings-button">保存设置</button>
         </div>
         <div class="settings-toggle">
-            <button id="toggleSettings" class="button-link">Notion 设置</button>
+            <button id="toggleSettings" class="button-link">Notion 设置说明</button>
+            <div id="settingsHelp" class="settings-help" style="display: none;">
+                <ol>
+                    <li>获取 Integration Token：
+                        <ul>
+                            <li>访问 <a href="https://www.notion.so/my-integrations" target="_blank">Notion Integrations</a></li>
+                            <li>创建新的 integration</li>
+                            <li>复制 "Internal Integration Token"</li>
+                        </ul>
+                    </li>
+                    <li>配置 Notion 页面：
+                        <ul>
+                            <li>打开目标 Notion 页面</li>
+                            <li>点击右上角 ••• → Add connections</li>
+                            <li>选择刚创建的 integration</li>
+                        </ul>
+                    </li>
+                    <li>获取 Page ID：
+                        <ul>
+                            <li>复制页面链接中最后一段</li>
+                            <li>示例：notion.so/xxx/<b>1513f7c67c13805a9e40dc384cf92fc2</b></li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
         </div>
     </div>
     <script src="popup.js"></script>

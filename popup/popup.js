@@ -15,9 +15,18 @@ document.addEventListener('DOMContentLoaded', function() {
         if (result.notionPageId) notionPageId.value = result.notionPageId;
     });
 
-    // 切换设置面板
+    // 切换设置面板和帮助说明
     toggleSettings.addEventListener('click', function() {
-        settingsPanel.style.display = settingsPanel.style.display === 'none' ? 'block' : 'none';
+        const helpPanel = document.getElementById('settingsHelp');
+        const settingsPanel = document.getElementById('settingsPanel');
+        
+        if (helpPanel.style.display === 'none') {
+            helpPanel.style.display = 'block';
+            settingsPanel.style.display = 'block';
+        } else {
+            helpPanel.style.display = 'none';
+            settingsPanel.style.display = 'none';
+        }
     });
 
     // 保存Notion设置
@@ -35,19 +44,27 @@ document.addEventListener('DOMContentLoaded', function() {
     sendToNotion.addEventListener('click', async function() {
         const content = notepad.value;
         if (!content) {
-            alert('请先输入内容');
+            sendToNotion.textContent = '请先输入内容';
+            setTimeout(() => {
+                sendToNotion.textContent = '发送到Notion';
+            }, 2000);
             return;
         }
 
         chrome.storage.local.get(['notionToken', 'notionPageId'], async function(result) {
             if (!result.notionToken || !result.notionPageId) {
-                alert('请先设置Notion Token和Page ID');
-                settingsPanel.style.display = 'block';
+                document.getElementById('settingsHelp').style.display = 'block';
+                document.getElementById('settingsPanel').style.display = 'block';
                 return;
             }
 
+            sendToNotion.textContent = '发送中...';
+            sendToNotion.disabled = true;
+
+            const cleanPageId = result.notionPageId.replace(/-/g, '');
+
             try {
-                const response = await fetch('https://api.notion.com/v1/blocks/' + result.notionPageId + '/children', {
+                const response = await fetch('https://api.notion.com/v1/blocks/' + cleanPageId + '/children', {
                     method: 'PATCH',
                     headers: {
                         'Authorization': 'Bearer ' + result.notionToken,
@@ -55,28 +72,91 @@ document.addEventListener('DOMContentLoaded', function() {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        children: [{
-                            object: 'block',
-                            type: 'paragraph',
-                            paragraph: {
-                                rich_text: [{
-                                    type: 'text',
-                                    text: {
-                                        content: content
+                        children: [
+                            {
+                                object: 'block',
+                                type: 'heading_1',
+                                heading_1: {
+                                    rich_text: [{
+                                        type: 'text',
+                                        text: {
+                                            content: new Date().toLocaleString()
+                                        },
+                                        annotations: {
+                                            color: 'gray'
+                                        }
+                                    }]
+                                }
+                            },
+                            ...content.split('\n').map(line => {
+                                if (line.startsWith('http')) {
+                                    return [
+                                        {
+                                            object: 'block',
+                                            type: 'heading_2',
+                                            heading_2: {
+                                                rich_text: [{
+                                                    type: 'text',
+                                                    text: {
+                                                        content: '来源：'
+                                                    }
+                                                }]
+                                            }
+                                        },
+                                        {
+                                            object: 'block',
+                                            type: 'paragraph',
+                                            paragraph: {
+                                                rich_text: [{
+                                                    type: 'text',
+                                                    text: {
+                                                        content: line
+                                                    }
+                                                }]
+                                            }
+                                        }
+                                    ];
+                                }
+                                return {
+                                    object: 'block',
+                                    type: 'paragraph',
+                                    paragraph: {
+                                        rich_text: [{
+                                            type: 'text',
+                                            text: {
+                                                content: line
+                                            }
+                                        }]
                                     }
-                                }]
+                                };
+                            }).flat(),
+                            {
+                                object: 'block',
+                                type: 'divider',
+                                divider: {}
                             }
-                        }]
+                        ]
                     })
                 });
 
-                if (response.ok) {
-                    alert('已成功发送到Notion');
-                } else {
-                    throw new Error('发送失败');
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.message || '发送失败');
                 }
+
+                sendToNotion.textContent = '✓ 已发送';
+                setTimeout(() => {
+                    sendToNotion.textContent = '发送到Notion';
+                    sendToNotion.disabled = false;
+                }, 2000);
+
             } catch (error) {
-                alert('发送失败：' + error.message);
+                console.error('Error details:', error);
+                sendToNotion.textContent = '× 发送失败';
+                setTimeout(() => {
+                    sendToNotion.textContent = '发送到Notion';
+                    sendToNotion.disabled = false;
+                }, 2000);
             }
         });
     });
