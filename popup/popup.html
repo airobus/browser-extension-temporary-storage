@@ -13,32 +13,38 @@
             <button id="clearButton" class="button">清除</button>
         </div>
         <div class="settings-panel" id="settingsPanel" style="display: none;">
-            <input type="text" id="notionToken" placeholder="Notion Integration Token" class="settings-input">
-            <input type="text" id="notionPageId" placeholder="Notion Page ID (复制页面链接最后一段)" class="settings-input">
+            <div class="settings-header">
+                <div class="settings-title">Notion 配置</div>
+                <div class="settings-subtitle">首次使用请完成以下配置</div>
+            </div>
+            <input type="text" id="notionToken" placeholder="Integration Token" class="settings-input">
+            <input type="text" id="notionPageId" placeholder="Page ID" class="settings-input">
             <button id="saveSettings" class="button settings-button">保存设置</button>
+            <div class="settings-tip">👇 查看详细设置步骤</div>
         </div>
         <div class="settings-toggle">
-            <button id="toggleSettings" class="button-link">Notion 设置说明</button>
+            <button id="toggleSettings" class="button-link">⚙️ Notion 设置</button>
             <div id="settingsHelp" class="settings-help" style="display: none;">
+                <div class="settings-help-title">设置步骤</div>
                 <ol>
-                    <li>获取 Integration Token：
+                    <li>获取 Token
                         <ul>
                             <li>访问 <a href="https://www.notion.so/my-integrations" target="_blank">Notion Integrations</a></li>
                             <li>创建新的 integration</li>
-                            <li>复制 "Internal Integration Token"</li>
+                            <li>复制 Token</li>
                         </ul>
                     </li>
-                    <li>配置 Notion 页面：
+                    <li>配置页面
                         <ul>
-                            <li>打开目标 Notion 页面</li>
+                            <li>打开目标页面</li>
                             <li>点击右上角 ••• → Add connections</li>
                             <li>选择刚创建的 integration</li>
                         </ul>
                     </li>
-                    <li>获取 Page ID：
+                    <li>获取 ID
                         <ul>
-                            <li>复制页面链接中最后一段</li>
-                            <li>示例：notion.so/xxx/<b>1513f7c67c13805a9e40dc384cf92fc2</b></li>
+                            <li>复制页面链接最后一段</li>
+                            <li>示例：<b>1513f7c67c13805a9e40dc384cf92fc2</b></li>
                         </ul>
                     </li>
                 </ol>

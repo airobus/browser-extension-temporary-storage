@@ -1,44 +1,54 @@
 :root {
-    --primary-color: #1a73e8;  /* Google Blue */
-    --danger-color: #dc3545;
     --background-color: #ffffff;
-    --text-color: #202124;
-    --border-color: #dadce0;
-    --hover-bg: #f8f9fa;
+    --surface-color: #f8f9fa;
+    --primary-gradient: linear-gradient(45deg, #0095f6, #00d1ff);
+    --primary-color: #0095f6;
+    --text-color: #262626;
+    --secondary-text: #737373;
+    --border-color: #dbdbdb;
+    --danger-color: #ed4956;
+    --shadow-color: rgba(0, 0, 0, 0.1);
 }
 
 body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    border-radius: 16px;
+    overflow: hidden;
 }
 
 .container {
-    width: 320px;
-    padding: 16px;
+    width: 360px;
+    padding: 20px;
     background-color: var(--background-color);
+    max-height: 600px;
+    overflow-y: auto;
+    box-sizing: border-box;
 }
 
 #notepad {
     width: 100%;
-    height: 220px;
-    padding: 12px;
-    margin-bottom: 16px;
+    height: 200px;
+    padding: 16px;
+    margin-bottom: 20px;
     border: 1px solid var(--border-color);
-    border-radius: 8px;
-    font-size: 14px;
+    border-radius: 16px;
+    font-size: 15px;
     line-height: 1.5;
     color: var(--text-color);
     resize: vertical;
     box-sizing: border-box;
     font-family: inherit;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
-    background-color: var(--background-color);
+    background-color: var(--surface-color);
+    transition: all 0.3s ease;
 }
 
 #notepad:focus {
     outline: none;
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.1);
+    box-shadow: 0 4px 12px var(--shadow-color);
 }
 
 .button-group {
@@ -48,27 +58,27 @@ body {
 
 .button {
     flex: 1;
-    padding: 10px 16px;
+    padding: 12px 20px;
     border: none;
-    border-radius: 8px;
+    border-radius: 12px;
     cursor: pointer;
     font-size: 14px;
-    font-weight: 500;
-    transition: all 0.2s ease;
+    font-weight: 600;
+    transition: all 0.3s ease;
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
-    overflow: hidden;
 }
 
 #saveButton {
-    background-color: var(--primary-color);
+    background: var(--primary-gradient);
     color: white;
+    transform-origin: center;
 }
 
 #saveButton:hover {
-    background-color: #1557b0;
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(0, 149, 246, 0.2);
 }
 
 #saveButton:active {
@@ -76,38 +86,193 @@ body {
 }
 
 #clearButton {
-    background-color: transparent;
+    background-color: white;
     color: var(--danger-color);
-    border: 1px solid var(--danger-color);
+    border: 1px solid var(--border-color);
 }
 
 #clearButton:hover {
-    background-color: rgba(220, 53, 69, 0.1);
+    background-color: #fafafa;
+    border-color: var(--danger-color);
 }
 
-#clearButton:active {
-    transform: scale(0.98);
+.notion-button {
+    background-color: var(--surface-color);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    font-weight: 500;
 }
 
-/* 添加涟漪效果 */
-.button::after {
-    content: '';
-    position: absolute;
+.notion-button:hover {
+    background-color: #f0f0f0;
+    transform: scale(1.02);
+}
+
+.settings-panel {
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 16px;
+    background-color: var(--surface-color);
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+}
+
+.settings-input {
     width: 100%;
-    height: 100%;
-    background: radial-gradient(circle, rgba(255,255,255,.3) 0%, transparent 60%);
-    transform: scale(0);
-    opacity: 0;
-    transition: transform 0.3s ease, opacity 0.3s ease;
+    padding: 14px;
+    margin-bottom: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    font-size: 14px;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+    word-wrap: break-word;
 }
 
-.button:active::after {
-    transform: scale(2);
-    opacity: 1;
-    transition: 0s;
+.settings-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 2px 8px var(--shadow-color);
 }
 
-/* 添加滚动条样式 */
+.button-link {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    cursor: pointer;
+    padding: 10px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.button-link:hover {
+    background-color: rgba(0, 149, 246, 0.1);
+}
+
+.settings-toggle {
+    text-align: center;
+    margin-top: 16px;
+}
+
+.settings-help {
+    margin-top: 16px;
+    padding: 24px;
+    background-color: var(--surface-color);
+    border-radius: 16px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    overflow-x: hidden;
+    word-wrap: break-word;
+}
+
+.settings-help ol {
+    margin: 0;
+    padding-left: 0;
+    list-style: none;
+    counter-reset: step-counter;
+}
+
+.settings-help ol > li {
+    margin-bottom: 24px;
+    padding-left: 36px;
+    position: relative;
+    counter-increment: step-counter;
+}
+
+.settings-help ol > li::before {
+    content: counter(step-counter);
+    position: absolute;
+    left: 0;
+    top: -2px;
+    width: 24px;
+    height: 24px;
+    background: var(--primary-gradient);
+    border-radius: 12px;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.settings-help ul {
+    margin: 12px 0 0 0;
+    padding-left: 0;
+    list-style: none;
+}
+
+.settings-help ul li {
+    margin: 8px 0;
+    padding-left: 20px;
+    position: relative;
+}
+
+.settings-help ul li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.settings-help a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+    padding: 2px 4px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.settings-help a:hover {
+    background-color: rgba(0, 149, 246, 0.1);
+    text-decoration: none;
+}
+
+.settings-help b {
+    font-family: monospace;
+    background-color: var(--background-color);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 13px;
+    border: 1px solid var(--border-color);
+    font-weight: normal;
+}
+
+.button-link {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    cursor: pointer;
+    padding: 10px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    width: 100%;
+    text-align: center;
+}
+
+.button-link:hover {
+    background-color: rgba(0, 149, 246, 0.1);
+}
+
+.settings-help-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-color);
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* 滚动条样式 */
 #notepad::-webkit-scrollbar {
     width: 8px;
 }
@@ -117,84 +282,99 @@ body {
 }
 
 #notepad::-webkit-scrollbar-thumb {
-    background-color: #dadce0;
+    background-color: var(--border-color);
     border-radius: 4px;
 }
 
 #notepad::-webkit-scrollbar-thumb:hover {
-    background-color: #bdc1c6;
+    background-color: #c0c0c0;
 }
 
-.notion-button {
-    background-color: #000000;
-    color: white;
+.container::-webkit-scrollbar {
+    width: 8px;
 }
 
-.notion-button:hover {
-    background-color: #2f3437;
+.container::-webkit-scrollbar-track {
+    background: transparent;
 }
 
-.settings-panel {
-    margin-top: 16px;
-    padding: 12px;
-    border-radius: 8px;
-    background-color: var(--hover-bg);
-}
-
-.settings-input {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 8px;
-    border: 1px solid var(--border-color);
+.container::-webkit-scrollbar-thumb {
+    background-color: var(--border-color);
     border-radius: 4px;
-    font-size: 14px;
 }
 
-.settings-button {
-    width: 100%;
-    background-color: var(--primary-color);
-    color: white;
+.container::-webkit-scrollbar-thumb:hover {
+    background-color: #c0c0c0;
+}
+
+.settings-header {
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.settings-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 4px;
+}
+
+.settings-subtitle {
+    font-size: 13px;
+    color: var(--secondary-text);
+}
+
+.settings-tip {
+    text-align: center;
+    color: var(--secondary-text);
+    font-size: 13px;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border-color);
 }
 
 .button-link {
-    background: none;
-    border: none;
-    color: var(--primary-color);
-    text-decoration: underline;
-    cursor: pointer;
-    padding: 4px;
-    margin-top: 8px;
-    font-size: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background-color: var(--surface-color);
+    border: 1px solid var(--border-color);
+    padding: 8px 16px;
 }
 
-.settings-toggle {
+.settings-help-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-color);
     text-align: center;
-    margin-top: 8px;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border-color);
 }
 
-.settings-help {
-    margin-top: 12px;
-    padding: 12px;
-    background-color: var(--hover-bg);
-    border-radius: 8px;
-    font-size: 13px;
-    line-height: 1.5;
+.settings-help ol > li {
+    font-weight: 600;
+    margin-bottom: 20px;
 }
 
-.settings-help ol {
-    margin: 0;
-    padding-left: 20px;
+.settings-help ul li {
+    font-weight: normal;
+    margin: 6px 0;
 }
 
-.settings-help li {
+/* 更新设置面板样式 */
+.settings-panel {
+    background-color: var(--background-color);
+    border: 1px solid var(--border-color);
+    margin-top: 16px;
+}
+
+/* 更新输入框样式 */
+.settings-input {
+    background-color: var(--surface-color);
     margin-bottom: 8px;
 }
 
-.settings-help a {
-    color: var(--primary-color);
-    text-decoration: none;
-}
-
-.settings-help a:hover {
-    text-decoration: underline;
+.settings-input::placeholder {
+    color: var(--secondary-text);
 } 
