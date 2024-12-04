@@ -35,8 +35,16 @@ document.addEventListener('DOMContentLoaded', function() {
             notionToken: notionToken.value,
             notionPageId: notionPageId.value
         }, function() {
-            alert('设置已保存');
-            settingsPanel.style.display = 'none';
+            // 添加保存成功的视觉反馈
+            saveSettings.textContent = '✓ 已保存';
+            saveSettings.classList.add('saved');
+            
+            // 2秒后恢复原样
+            setTimeout(() => {
+                saveSettings.textContent = '保存设置';
+                saveSettings.classList.remove('saved');
+                settingsPanel.style.display = 'none';
+            }, 2000);
         });
     });
 
@@ -83,7 +91,8 @@ document.addEventListener('DOMContentLoaded', function() {
                                             content: new Date().toLocaleString()
                                         },
                                         annotations: {
-                                            color: 'gray'
+                                            color: 'default',
+                                            bold: true
                                         }
                                     }]
                                 }
